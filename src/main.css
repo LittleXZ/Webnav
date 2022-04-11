@@ -1,0 +1,162 @@
+/*css reset*/
+*{box-sizing: border-box}
+*{margin: 0;padding: 0}
+*:after{box-sizing: border-box}
+*:before{box-sizing: border-box}
+ul,li {list-style: none;}
+/*iconfont*/
+.icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+}
+
+/*google logo*/
+#webLogo > p {font-size: 5em;letter-spacing: -2px;font-family: Arial,Helvetica,Sans-Serif;}
+span.g1{color: #4285f4;}
+span.o1{color: #ea4335;}
+span.o2{color: #fbbc05;}
+span.g2{color: #4285f4;}
+span.l{color: #34a853;}
+span.e{color: #ea4335;}
+
+/*css style*/
+
+#webLogo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#globalHeader {
+  position: relative;
+}
+#navBar {
+  position: absolute;
+  border: 1px solid red;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  min-width: 100vw;
+  background-color: #eee;
+}
+
+#globalMain {
+  padding-top: 12vh;
+}
+#searchBox {
+  margin-top: 6vh;
+  border: 1px solid yellow;
+}
+
+#searchBox form{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+}
+#searchIcon {
+  position: absolute;
+  left: 4%;
+}
+#searchIcon >svg {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 10vw;
+}
+#searchBox input {
+  height: 5vh;
+  outline: none;
+  color: rgb(112, 112, 112);
+  font-size: 1em;
+  border: rgb(218, 218, 218) solid 1px;
+  border-radius: 2em;
+  box-shadow: 0 0 5px rgb(212, 212, 212);
+  width: 100%;
+  padding-right: 10vw;
+  padding-left: 10vw;
+  margin-left: 10vw;
+  margin-right: 10vw;
+}
+@media screen and (max-width: 500px){
+  #searchBox button{
+    display: none;
+  }
+}
+
+#wrapList {
+  margin-top: 8vh;
+  border: 1px solid red;
+  position: relative;
+  max-width: 80vw;
+  margin-left: auto;
+  margin-right: auto;
+}
+.listName{
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.listName{
+  color: red;
+}
+.tagList{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-right: -3.4%;
+  margin-top: 4vh;
+}
+.tagStyle{
+  height: 12vh;
+  width: 30%;
+  border: #4285f4 1px solid;
+  margin-right: 3.3%;
+  margin-bottom: 2vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+@media screen and (min-width: 500px ) {
+  .tagStyle:hover{
+    background-color: #ddd;
+    cursor:pointer;
+  }
+}
+
+.close{
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.webLogo{
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: #eee;
+}
+.webLogo svg{
+  width: 20px;
+  height: 20px;
+  color: #333;
+}
+.webUrl{
+  font-size: 0.8em;
+  color: #333;
+}
+.close svg{
+  font-size: 1.2em;
+}
+@media screen and (max-width: 500px ) {
+  .close svg {
+    display: none;
+  }
+}
