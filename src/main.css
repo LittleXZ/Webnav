@@ -109,7 +109,9 @@ span.e{color: #ea4335;}
   flex-wrap: wrap;
   margin-right: -3.4%;
   margin-top: 4vh;
+  border: 1px solid yellow;
 }
+
 .tagStyle{
   height: 12vh;
   width: 30%;
@@ -143,20 +145,29 @@ span.e{color: #ea4335;}
   border-radius: 50%;
   background-color: #eee;
 }
+.webLogo > img {
+  height: 32px;
+  width: 32px;
+}
 .webLogo svg{
   width: 20px;
   height: 20px;
   color: #333;
 }
 .webUrl{
+  text-align: center;
+  width: 100%;
   font-size: 0.8em;
   color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .close svg{
   font-size: 1.2em;
 }
 @media screen and (max-width: 500px ) {
-  .close svg {
+  .close {
     display: none;
   }
 }

@@ -18,44 +18,105 @@ function isURL(url) {
     return false;
 }
 
-// localStorage
-let hashMap = []
+const local = localStorage.getItem(`cache`)
+const localObj = JSON.parse(local)
+let $tagAdd = $(`.tagAdd`)
+let i = 0
+let hashMap = localObj
+if (hashMap === undefined) {
+    hashMap = [{
+        logo: `https://github.com`,
+        url: `github.com`
+    }
+    ]
+}
+
+function repaint() {
+    $(`
+            <li class="tag tagStyle">
+                <div class="webLogo"><img src="https://favicon.cccyun.cc/${hashMap[i].logo}" alt=""></div>
+                <div class="webUrl">${hashMap[i].url}</div>
+                <div class="close"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-close"></use></svg></div>
+            </li>`
+    ).insertBefore($tagAdd)
+    i++
+}
+
+hashMap.forEach(() => {
+    repaint()
+})
 
 $('.tagAdd').on('click', () => {
     let url = window.prompt(`请输入你要添加的网址`)
-    let longurl
-    let shorturl
-    if (url.indexOf(`http` || `https` || `ftp`) !== 0) {
-        longurl = `https://` + url
-        shorturl = url
+    let completeUrl
+    if (url.indexOf(`http` || `https`) === -1) {
+        completeUrl = `https://` + url
+    } else if (url.indexOf(`https`) === -1) {
+        completeUrl = url.replace(`http://`, `https://`)
     } else {
-        shorturl = url.replace(`https://`, ``)
-            .replace(`http://`, ``)
-            .replace(`www.`, ``)
-        console.log(shorturl + `333`)
+        completeUrl = url
     }
+    let shortUrl = url
+        .replace(`https://`, ``)
+        .replace(`http://`, ``)
+        .replace(`www.`, ``)
+
     if (isURL(url)) {
-        let $tagAdd = $(`.tagAdd`)
-        let $tagList = $(`.tagList`)
-        $tagList.find(`.tag:not(.last)`).remove()
-        hashMap.push({logo:longurl,url:shorturl})
-        hashMap.forEach((node) => {
-            let $tag = $(`
-                <li class="tag tagStyle">
-                    <div class="webLogo">
-                    <img src="chrome://favicon/${node.logo}" alt="">
-                    </div>
-                    <div class="webUrl">
-                        ${node.url}
-                    </div>
-                    <div class="close">
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-close"></use>
-                        </svg>
-                    </div>
-                </li>`).insertBefore($tagAdd)
+        hashMap.push({
+            logo: completeUrl,
+            url: shortUrl
         })
+        repaint()
     } else {
         alert('请输入正确的网址')
+    }
+})
+
+// 手机端长按
+let timer = null
+let startTime = ``
+let endTime = ``
+let tag = Array.from(document.querySelectorAll(`.tag`))
+tag.forEach((e) => {
+    e.addEventListener(`touchstart`, () => {
+        startTime = +new Date()
+        timer = setTimeout(() => {
+            $(`.tagList .close`).css(`display`, `block`)
+        }, 500)
+    })
+    e.addEventListener(`touchend`, () => {
+            endTime = +new Date()
+            clearTimeout(timer)
+            if (endTime - startTime < 700) {
+                if ($(`.tagList .close`).css(`display`) === `none`){
+                    // window.location = `https://`+(ele.currentTarget.children[1].innerText)
+                    console.log(`打开网站`)
+                }
+            }
+        }
+    )
+})
+
+let $tag = $(`.tag`)
+$tag.on(`click`,(e)=>{
+    if(e.target.tagName.toLowerCase() === `svg` || e.target.tagName.toLowerCase() === `use` || e.target.className.toLowerCase() === `close`){  //定位在X上
+        e.currentTarget.setAttribute(`style`,`display:none`)
+        let i = 0;  // 遍历看自己是第几个儿子来删除对应的缓存
+        while((e.currentTarget = e.currentTarget.previousSibling) != null) i++;
+        hashMap.splice(i-1,1)
+        e.stopPropagation()
+    }
+    e.isPropagationStopped()
+})
+
+// localStorage
+window.onbeforeunload = () => {
+    const local = JSON.stringify(hashMap)
+    localStorage.setItem(`cache`, local)
+}
+
+$(`html`).on(`click`,(e)=>{
+    if (e.target.className.toLowerCase() !== `taglist`){
+        $(`.close`).css(`display`,`none`)
     }
 })
