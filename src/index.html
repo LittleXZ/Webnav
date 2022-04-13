@@ -9,52 +9,128 @@
     <title>前航-前端导航</title>
 </head>
 <body>
-    <header id="globalHeader">
-        <nav id="navBar">
-            <div>主页</div>
-            <div>收藏</div>
-            <div>热门网站</div>
-            <div>等等等等</div>
-        </nav>
-    </header>
-    <main id="globalMain">
-        <div id="webLogo">
-            <p><span class="g1">W</span><span class="o1">e</span><span class="o2">b</span><span class="g2">n</span><span class="l">a</span><span class="e">v</span></p>
+<header id="globalHeader">
+    <nav id="navBar">
+    </nav>
+</header>
+<main id="globalMain">
+    <div id="webLogo">
+        <p><span class="g1">W</span><span class="o1">e</span><span class="o2">b</span><span class="g2">n</span><span
+                class="l">a</span><span class="e">v</span></p>
+    </div>
+    <div id="searchBox">
+        <form action="">
+            <div id="searchIcon">
+                <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-search"></use>
+                </svg>
+            </div>
+            <input type="text" placeholder="使用百度搜索">
+            <button>搜索</button>
+        </form>
+    </div>
+    <div id="wrapList">
+        <div class="listName">
+            <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-cc-star"></use>
+            </svg>
+            <span>我的收藏</span>
         </div>
-        <div id="searchBox">
-            <form action="">
-                <div id="searchIcon">
+        <ul class="starList">
+            <li class="tagStyle tagAdd">
+                <div class="starLogo">
                     <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-search"></use>
+                        <use xlink:href="#icon-add"></use>
                     </svg>
                 </div>
-                <input type="text" placeholder="使用百度搜索">
-                <button>搜索</button>
-            </form>
+                <div class="webUrl">
+                    添加页面
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="wrapWeb">
+        <div class="listName webName">
+            <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-web"></use>
+            </svg>
+            <span>工具网站</span>
         </div>
-        <div id="wrapList">
-            <span class="listName">收藏站点</span>
-            <ul class="tagList">
-                <li class="tagStyle tagAdd">
-                    <div class="webLogo">
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-add"></use>
-                        </svg>
-                    </div>
-                    <div class="webUrl">
-                        添加页面
-                    </div>
-                </li>
-            </ul>
+        <ul class="webList flexCenter">
+            <li class="webStyle">
+                <div class="siteLogo">
+                    <img src="https://favicon.cccyun.cc/https://developer.mozilla.org/" alt="">
+                </div>
+                <div class="webUrl">
+                    MDN文档
+                </div>
+            </li>
+            <li class="webStyle">
+                <div class="siteLogo">
+                    <img src="https://favicon.cccyun.cc/https://caniuse.com/" alt="">
+                </div>
+                <div class="webUrl">
+                    CanIUse
+                </div>
+            </li>
+            <li class="webStyle">
+                <div class="siteLogo">
+                    <img src="https://favicon.cccyun.cc/https://www.iconfont.cn/" alt="">
+                </div>
+                <div class="webUrl">
+                    阿里巴巴图标库
+                </div>
+            </li>
 
-        </div>
-    </main>
-    <footer id="globalFooter">
+            <li class="webStyle">
+                <div class="siteLogo">
+                    <img src="https://unbug.github.io/codelf/images/codelf_logo.f4ae25bd.png" alt="">
+                </div>
+                <div class="webUrl">
+                    CodeIf
+                </div>
+            </li>
+            <!--            <li class="webStyle">-->
+            <!--                <div class="siteLogo">-->
+            <!--                    <img src="https://favicon.cccyun.cc/https://www.bootcdn.cn/" alt="">-->
+            <!--                </div>-->
+            <!--                <div class="webUrl">-->
+            <!--                    BootCDN-->
+            <!--                </div>-->
+            <!--            </li>-->
+            <!--            <li class="webStyle">-->
+            <!--                <div class="siteLogo">-->
+            <!--                    <img src="https://favicon.cccyun.cc/https://favicon.cccyun.cc/" alt="">-->
+            <!--                </div>-->
+            <!--                <div class="webUrl">-->
+            <!--                    获取favicon-->
+            <!--                </div>-->
+            <!--            </li>-->
+            <!--            <li class="webStyle">-->
+            <!--                <div class="siteLogo">-->
+            <!--                    <img src="https://favicon.cccyun.cc/https://www.jquery123.com/" alt="">-->
+            <!--                </div>-->
+            <!--                <div class="webUrl">-->
+            <!--                    jQuery文档-->
+            <!--                </div>-->
+            <!--            </li>-->
+            <!--            <li class="webStyle">-->
+            <!--                <div class="siteLogo">-->
+            <!--                    <img src="https://favicon.cccyun.cc/https://icons8.com/" alt="">-->
+            <!--                </div>-->
+            <!--                <div class="webUrl">-->
+            <!--                    Icon8图标库-->
+            <!--                </div>-->
+            <!--            </li>-->
+        </ul>
+    </div>
+</main>
+<footer id="globalFooter">
 
-    </footer>
-<!--    <script src="./jQuery.min.js"></script>-->
-    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="//at.alicdn.com/t/font_3317552_q4e7gy5peh.js"></script>
-    <script src="index.js"></script>
+</footer>
+<script src="./jQuery.min.js"></script>
+<!--    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>-->
+<script src="//at.alicdn.com/t/font_3317552_63zi7u6sd6u.js"></script>
+<script src="index.js"></script>
 </body>
 </html>

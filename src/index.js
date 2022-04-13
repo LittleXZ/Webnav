@@ -18,12 +18,13 @@ function isURL(url) {
     return false;
 }
 
+
 const local = localStorage.getItem(`cache`)
 const localObj = JSON.parse(local)
 let $tagAdd = $(`.tagAdd`)
 let i = 0
 let hashMap = localObj
-if (hashMap === undefined) {
+if (hashMap === undefined || hashMap === null) {
     hashMap = [{
         logo: `https://github.com`,
         url: `github.com`
@@ -34,7 +35,7 @@ if (hashMap === undefined) {
 function repaint() {
     $(`
             <li class="tag tagStyle">
-                <div class="webLogo"><img src="https://favicon.cccyun.cc/${hashMap[i].logo}" alt=""></div>
+                <div class="starLogo"><img src="https://favicon.cccyun.cc/${hashMap[i].logo}" alt=""></div>
                 <div class="webUrl">${hashMap[i].url}</div>
                 <div class="close"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-close"></use></svg></div>
             </li>`
@@ -81,15 +82,15 @@ tag.forEach((e) => {
     e.addEventListener(`touchstart`, () => {
         startTime = +new Date()
         timer = setTimeout(() => {
-            $(`.tagList .close`).css(`display`, `block`)
+            $(`.tagStyle .close`).css(`display`, `block`)
         }, 500)
     })
-    e.addEventListener(`touchend`, () => {
+    e.addEventListener(`touchend`, (ele) => {
             endTime = +new Date()
             clearTimeout(timer)
             if (endTime - startTime < 700) {
-                if ($(`.tagList .close`).css(`display`) === `none`){
-                    // window.location = `https://`+(ele.currentTarget.children[1].innerText)
+                if ($(`.tagStyle .close`).css(`display`) === `none`){
+                    window.location = `https://`+(ele.currentTarget.children[1].innerText)
                     console.log(`打开网站`)
                 }
             }
@@ -109,6 +110,15 @@ $tag.on(`click`,(e)=>{
     e.isPropagationStopped()
 })
 
+$(`.webStyle`).on(`click`,(e)=>{
+    console.log(e.currentTarget)
+    let webUrl = e.currentTarget.children[0].children[0].src.replace(`https://favicon.cccyun.cc/`,``)
+    window.location = webUrl
+    if (e.target.className.toLowerCase() === `webStyle`){
+        console.log(`open`)
+    }
+})
+
 // localStorage
 window.onbeforeunload = () => {
     const local = JSON.stringify(hashMap)
@@ -116,7 +126,7 @@ window.onbeforeunload = () => {
 }
 
 $(`html`).on(`click`,(e)=>{
-    if (e.target.className.toLowerCase() !== `taglist`){
+    if (e.target.className.toLowerCase() !== `tagstyle`){
         $(`.close`).css(`display`,`none`)
     }
 })

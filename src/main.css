@@ -4,6 +4,26 @@
 *:after{box-sizing: border-box}
 *:before{box-sizing: border-box}
 ul,li {list-style: none;}
+
+* {
+  -webkit-touch-callout:none;
+  -webkit-user-select:none;
+  -khtml-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+}
+img { pointer-events: none; }
+input {
+  -webkit-user-select:auto; /*webkit浏览器*/
+}
+
+.flexCenter{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
 /*iconfont*/
 .icon {
     width: 1em;
@@ -23,7 +43,6 @@ span.l{color: #34a853;}
 span.e{color: #ea4335;}
 
 /*css style*/
-
 #webLogo {
   display: flex;
   justify-content: center;
@@ -32,22 +51,11 @@ span.e{color: #ea4335;}
 #globalHeader {
   position: relative;
 }
-#navBar {
-  position: absolute;
-  border: 1px solid red;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  min-width: 100vw;
-  background-color: #eee;
-}
-
 #globalMain {
-  padding-top: 12vh;
+  padding-top: 60px;
 }
 #searchBox {
-  margin-top: 6vh;
-  border: 1px solid yellow;
+  margin-top: 20px;
 }
 
 #searchBox form{
@@ -65,10 +73,10 @@ span.e{color: #ea4335;}
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  margin-left: 10vw;
+  margin-left: 5vw;
 }
 #searchBox input {
-  height: 5vh;
+  height: 50px;
   outline: none;
   color: rgb(112, 112, 112);
   font-size: 1em;
@@ -78,8 +86,8 @@ span.e{color: #ea4335;}
   width: 100%;
   padding-right: 10vw;
   padding-left: 10vw;
-  margin-left: 10vw;
-  margin-right: 10vw;
+  margin-left: 5vw;
+  margin-right: 5vw;
 }
 @media screen and (max-width: 500px){
   #searchBox button{
@@ -88,40 +96,48 @@ span.e{color: #ea4335;}
 }
 
 #wrapList {
-  margin-top: 8vh;
-  border: 1px solid red;
+  margin-top: 30px;
+  border-top: 2px solid #fbf8f8;
   position: relative;
-  max-width: 80vw;
+  border-radius: 4px;
+  max-width: 90vw;
   margin-left: auto;
   margin-right: auto;
 }
 .listName{
   position: absolute;
-  top: 0;
+  top: 10px;
   left: 0;
 }
 .listName{
-  color: red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.tagList{
+.listName svg{
+  font-size: 1.5em;
+  color: rgb(255, 209, 0);
+}
+.listName span{
+  color: #606266;
+  margin-left: 2px;
+}
+.starList{
+  margin-right: -3%;
+  margin-top: 40px;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  margin-right: -3.4%;
-  margin-top: 4vh;
-  border: 1px solid yellow;
 }
 
 .tagStyle{
-  height: 12vh;
-  width: 30%;
-  border: #4285f4 1px solid;
-  margin-right: 3.3%;
-  margin-bottom: 2vh;
+  width: 22%;
+  margin-right: 3%;
+  margin-bottom: 10px;
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
 }
 @media screen and (min-width: 500px ) {
@@ -132,42 +148,83 @@ span.e{color: #ea4335;}
 }
 
 .close{
+  display: none;
   position: absolute;
-  top: 0;
-  right: 0;
+  top: -5px;
+  right: -5px;
 }
-.webLogo{
-  width: 60px;
-  height: 60px;
+.starLogo{
+  width: 50px;
+  height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 50%;
   background-color: #eee;
+  margin-top: 10px;
 }
-.webLogo > img {
-  height: 32px;
-  width: 32px;
+.starLogo > img {
+  height: 28px;
+  width: 28px;
 }
-.webLogo svg{
-  width: 20px;
-  height: 20px;
+.starLogo svg{
+  width: 28px;
+  height: 28px;
   color: #333;
 }
 .webUrl{
   text-align: center;
   width: 100%;
   font-size: 0.8em;
-  color: #333;
+  color: #606266;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin-top: 10px;
 }
 .close svg{
   font-size: 1.2em;
+  color: #333;
 }
-@media screen and (max-width: 500px ) {
-  .close {
-    display: none;
-  }
+
+.wrapWeb{
+  margin-top: 20px;
+  border-top: 2px solid #fbf8f8;
+  position: relative;
+  border-radius: 4px;
+  max-width: 90vw;
+  margin-left: auto;
+  margin-right: auto;
+}
+.webList{
+  margin-right: -3%;
+  margin-top: 40px;
+}
+.webStyle{
+  width: 22%;
+  margin-right: 3%;
+  margin-bottom: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.siteLogo{
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: #eee;
+  margin-top: 10px;
+}
+.siteLogo > img {
+  width: 28px;
+  height: 28px;
+  color: #333;
+}
+.webName svg {
+  color: #4285f4;
 }
