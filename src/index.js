@@ -18,10 +18,10 @@ function isURL(url) {
     return false;
 }
 // 调试器
-$(`html`).eq(0).on(`click`, (e) => {
-    console.log(e.target)
-})
-console.log($(`html`).eq(0))
+// $(`html`).eq(0).on(`click`, (e) => {
+//     console.log(e.target)
+//     console.log(e.target.parentNode)
+// })
 // localstorage
 const local = localStorage.getItem(`cache`)
 const localObj = JSON.parse(local)
@@ -68,7 +68,6 @@ $('.tagAdd').on('click', () => {
     $(`#msg_confirm`).on(`click`, () => {
         let url = document.getElementById(`alertValue`).value
         if (url.length > 0) {
-            console.log(`>0`)
             let completeUrl
             if (url.indexOf(`http` || `https`) === -1) {
                 completeUrl = `https://` + url
@@ -124,20 +123,41 @@ $('.tagAdd').on('click', () => {
             $(`.close`).css(`display`, `none`)
         }
     })
+// 收藏栏点击事件
 // 遍历看自己是第几个儿子来删除对应的缓存
-    let $tag = $(`.tag`)
-    $tag.on(`click`, (e) => {
-        if (e.target.tagName.toLowerCase() === `svg` || e.target.tagName.toLowerCase() === `use` || e.target.className.toLowerCase() === `close`) {  //定位在X上
-            e.currentTarget.setAttribute(`style`, `display:none`)
-            let i = 0;
-            while ((e.currentTarget = e.currentTarget.previousSibling) != null) i++;
-            hashMap.splice(i - 1, 1)
-        }
-    })
-// 第一栏点击事件
-    $(`.tagStyle`).on(`click`, (e) => {
-        window.location = e.currentTarget.childNodes[1].childNodes[0].src.replace(`https://favicon.cccyun.cc/`, ``)
-    })
+// 监听自己
+// $(`.tag`).on(`click`, (e) => {
+//         console.log(`clicked`)
+//         if (e.target.tagName.toLowerCase() === `svg` || e.target.tagName.toLowerCase() === `use` || e.target.className.toLowerCase() === `close`) {  //定位在X上
+//             console.log(`if start`)
+//             e.currentTarget.setAttribute(`style`, `display:none`)
+//             console.log(`if end`)
+//             let t = 0;
+//             while ((e.currentTarget = e.currentTarget.previousSibling) !== null) t++;
+//             hashMap.splice(t - 1, 1)
+//             i--
+//             console.log(`delete   `+hashMap)
+//             repaint()
+//         }else {
+//             window.location = e.currentTarget.childNodes[1].childNodes[0].src.replace(`https://favicon.cccyun.cc/`, ``)
+//         }
+//     })
+// 监听在父元素上
+$(`.starList`).on(`click`, (e) => {
+    console.log(`clicked`)
+    let $closeTag = $(e.target).parentsUntil(e.currentTarget, `.tag`)
+    if (e.target.tagName.toLowerCase() === `svg` || e.target.tagName.toLowerCase() === `use` || e.target.className.toLowerCase() === `close`) {  //定位在X上
+        $closeTag[0].remove()
+        let t = 0;
+        while (($closeTag[0] = $closeTag[0].previousSibling) !== null) t++;
+        hashMap.splice(t - 1, 1)
+        i--
+        repaint()
+    }else {
+        window.location = $closeTag.find(`img`)[0].src.replace(`https://favicon.cccyun.cc/`, ``)
+    }
+})
+
 // localStorage
     window.onbeforeunload = () => {
         const local = JSON.stringify(hashMap)
@@ -152,7 +172,6 @@ $('.tagAdd').on('click', () => {
                     window.location = `https://www.baidu.com/s?wd=` + searchValue
                 }
             }else {
-                console.log(`yep`)
                 $(`#msg_confirm`).click()
             }
         }

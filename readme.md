@@ -8,3 +8,7 @@
 - **丰富一些小细节**     
 
 ******Use Yarn and Parcel build******
+
+
+
+- 修复JS逻辑
