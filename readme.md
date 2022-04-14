@@ -2,4 +2,4 @@
 
 **自由添加书签，长按删除**
 
-****** Use Yarn and Parcel build ******
+******Use Yarn and Parcel build******
