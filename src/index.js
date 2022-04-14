@@ -17,8 +17,12 @@ function isURL(url) {
     }
     return false;
 }
-
-
+// 调试器
+$(`html`).eq(0).on(`click`, (e) => {
+    console.log(e.target)
+})
+console.log($(`html`).eq(0))
+// localstorage
 const local = localStorage.getItem(`cache`)
 const localObj = JSON.parse(local)
 let $tagAdd = $(`.tagAdd`)
@@ -28,105 +32,129 @@ if (hashMap === undefined || hashMap === null) {
     hashMap = [{
         logo: `https://github.com`,
         url: `github.com`
-    }
-    ]
+    }]
 }
-
+// 通过localstorage 重绘收藏夹
 function repaint() {
     $(`
-            <li class="tag tagStyle">
-                <div class="starLogo"><img src="https://favicon.cccyun.cc/${hashMap[i].logo}" alt=""></div>
-                <div class="webUrl">${hashMap[i].url}</div>
-                <div class="close"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-close"></use></svg></div>
-            </li>`
+        <li class="tag tagStyle">
+            <div class="starLogo"><img src="https://favicon.cccyun.cc/${hashMap[i].logo}" alt=""></div>
+            <div class="webUrl">${hashMap[i].url}</div>
+            <div class="close"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-close"></use></svg></div>
+        </li>`
     ).insertBefore($tagAdd)
     i++
 }
-
+//哈希
 hashMap.forEach(() => {
     repaint()
 })
-
+// 修改弹窗
+function newAlert(e) {
+    $(`
+        <div id="msg">
+            <div id="msg_top">${e}<div id="msg_tips"></div></div>
+            <div id="msg_cont"><input id="alertValue" type="text"></div>
+            <div id="msg_confirm">确定</div>
+            <div id="msg_cancel">取消</div>
+        </div>`).insertBefore($`body`)
+}
+// 添加书签
 $('.tagAdd').on('click', () => {
-    let url = window.prompt(`请输入你要添加的网址`)
-    let completeUrl
-    if (url.indexOf(`http` || `https`) === -1) {
-        completeUrl = `https://` + url
-    } else if (url.indexOf(`https`) === -1) {
-        completeUrl = url.replace(`http://`, `https://`)
-    } else {
-        completeUrl = url
-    }
-    let shortUrl = url
-        .replace(`https://`, ``)
-        .replace(`http://`, ``)
-        .replace(`www.`, ``)
-
-    if (isURL(url)) {
-        hashMap.push({
-            logo: completeUrl,
-            url: shortUrl
-        })
-        repaint()
-    } else {
-        alert('请输入正确的网址')
-    }
-})
-
-// 手机端长按
-let timer = null
-let startTime = ``
-let endTime = ``
-let tag = Array.from(document.querySelectorAll(`.tag`))
-tag.forEach((e) => {
-    e.addEventListener(`touchstart`, () => {
-        startTime = +new Date()
-        timer = setTimeout(() => {
-            $(`.tagStyle .close`).css(`display`, `block`)
-        }, 500)
+    newAlert(`请输入你要收藏的网址`)
+    $(`#msg_cancel`).click(() => {
+        $(`#msg`).remove();
     })
-    e.addEventListener(`touchend`, (ele) => {
-            endTime = +new Date()
-            clearTimeout(timer)
-            if (endTime - startTime < 700) {
-                if ($(`.tagStyle .close`).css(`display`) === `none`){
-                    window.location = `https://`+(ele.currentTarget.children[1].innerText)
-                    console.log(`打开网站`)
+    $(`#msg_confirm`).on(`click`, () => {
+        let url = document.getElementById(`alertValue`).value
+        if (url.length > 0) {
+            console.log(`>0`)
+            let completeUrl
+            if (url.indexOf(`http` || `https`) === -1) {
+                completeUrl = `https://` + url
+            } else if (url.indexOf(`https`) === -1) {
+                completeUrl = url.replace(`http://`, `https://`)
+            } else {
+                completeUrl = url
+            }
+            let shortUrl = url
+                .replace(`https://`, ``)
+                .replace(`http://`, ``)
+                .replace(`www.`, ``)
+            if (isURL(url)) {
+                hashMap.push({
+                    logo: completeUrl,
+                    url: shortUrl
+                })
+                repaint()
+                $(`#msg`).remove()
+            }else {
+                $(`#msg_top`)[0].children[0].innerText = `请输入正确的网址哦`
+            }
+        }else {
+            $(`#msg_top`)[0].children[0].innerText = `请输入一些东西哦`
+        }}
+    )
+    })
+// 手机端长按
+    let timer = null
+    let startTime = ``
+    let endTime = ``
+    let tag = Array.from(document.querySelectorAll(`.tag`))
+    tag.forEach((e) => {
+        e.addEventListener(`touchstart`, () => {
+            startTime = +new Date()
+            timer = setTimeout(() => {
+                $(`.tagStyle .close`).css(`display`, `block`)
+            }, 500)
+        })
+        e.addEventListener(`touchend`, (ele) => {
+                endTime = +new Date()
+                clearTimeout(timer)
+                if (endTime - startTime < 700) {
+                    if ($(`.tagStyle .close`).css(`display`) === `none`) {
+                        window.location = `https://` + (ele.currentTarget.children[1].innerText)
+                    }
                 }
             }
+        )
+    })
+    $(`html`).on(`touchstart`, (e) => {
+        if (e.target.className.toLowerCase() !== `tagstyle`) {
+            $(`.close`).css(`display`, `none`)
         }
-    )
-})
-
-let $tag = $(`.tag`)
-$tag.on(`click`,(e)=>{
-    if(e.target.tagName.toLowerCase() === `svg` || e.target.tagName.toLowerCase() === `use` || e.target.className.toLowerCase() === `close`){  //定位在X上
-        e.currentTarget.setAttribute(`style`,`display:none`)
-        let i = 0;  // 遍历看自己是第几个儿子来删除对应的缓存
-        while((e.currentTarget = e.currentTarget.previousSibling) != null) i++;
-        hashMap.splice(i-1,1)
-        e.stopPropagation()
-    }
-    e.isPropagationStopped()
-})
-
-$(`.webStyle`).on(`click`,(e)=>{
-    console.log(e.currentTarget)
-    let webUrl = e.currentTarget.children[0].children[0].src.replace(`https://favicon.cccyun.cc/`,``)
-    window.location = webUrl
-    if (e.target.className.toLowerCase() === `webStyle`){
-        console.log(`open`)
-    }
-})
-
+    })
+// 遍历看自己是第几个儿子来删除对应的缓存
+    let $tag = $(`.tag`)
+    $tag.on(`click`, (e) => {
+        if (e.target.tagName.toLowerCase() === `svg` || e.target.tagName.toLowerCase() === `use` || e.target.className.toLowerCase() === `close`) {  //定位在X上
+            e.currentTarget.setAttribute(`style`, `display:none`)
+            let i = 0;
+            while ((e.currentTarget = e.currentTarget.previousSibling) != null) i++;
+            hashMap.splice(i - 1, 1)
+        }
+    })
+// 第一栏点击事件
+    $(`.tagStyle`).on(`click`, (e) => {
+        window.location = e.currentTarget.childNodes[1].childNodes[0].src.replace(`https://favicon.cccyun.cc/`, ``)
+    })
 // localStorage
-window.onbeforeunload = () => {
-    const local = JSON.stringify(hashMap)
-    localStorage.setItem(`cache`, local)
-}
-
-$(`html`).on(`click`,(e)=>{
-    if (e.target.className.toLowerCase() !== `tagstyle`){
-        $(`.close`).css(`display`,`none`)
+    window.onbeforeunload = () => {
+        const local = JSON.stringify(hashMap)
+        localStorage.setItem(`cache`, local)
     }
-})
+// 回车事件 搜索框搜索 提交栏提交
+    $(document).on(`keypress`, (e) => {
+        let searchValue = document.getElementById("searchInput").value
+        if (e.keyCode === 13) {
+            if ($.contains(document, document.getElementById(`msg`)) !== true) {
+                if (searchValue.length > 0) {
+                    window.location = `https://www.baidu.com/s?wd=` + searchValue
+                }
+            }else {
+                console.log(`yep`)
+                $(`#msg_confirm`).click()
+            }
+        }
+    })
+
