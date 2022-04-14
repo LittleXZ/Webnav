@@ -10,5 +10,5 @@
 ******Use Yarn and Parcel build******
 
 
-
+- fix选择器
 - 修复JS逻辑

@@ -144,7 +144,6 @@ $('.tagAdd').on('click', () => {
 //     })
 // 监听在父元素上
 $(`.starList`).on(`click`, (e) => {
-    console.log(`clicked`)
     let $closeTag = $(e.target).parentsUntil(e.currentTarget, `.tag`)
     if (e.target.tagName.toLowerCase() === `svg` || e.target.tagName.toLowerCase() === `use` || e.target.className.toLowerCase() === `close`) {  //定位在X上
         $closeTag[0].remove()
@@ -156,6 +155,13 @@ $(`.starList`).on(`click`, (e) => {
     }else {
         window.location = $closeTag.find(`img`)[0].src.replace(`https://favicon.cccyun.cc/`, ``)
     }
+})
+
+$(`.webStyle`).on(`click`,(e) => {
+    let $e = $(e.currentTarget)
+    console.log($e)
+    console.log($e.find(`img`)[0].src)
+    window.location = $e.find(`img`)[0].src.replace(`https://favicon.cccyun.cc/`, ``)
 })
 
 // localStorage
